@@ -1,0 +1,547 @@
+<title>三創優惠券測試流程</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;600;700&family=Noto+Sans+TC:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+
+<style>
+  :root {
+    --ink: #241f1a;
+    --ink-soft: #5b5348;
+    --paper: #faf7f1;
+    --surface: #ffffff;
+    --surface-sunken: #f2ede3;
+    --border: #e2d9c7;
+    --border-strong: #cabfa5;
+    --accent: #b5540c;
+    --accent-soft: #f4e3d1;
+    --accent-ink: #7a3a08;
+    --good: #2f6844;
+    --good-soft: #e3ede4;
+    --warn: #9a6b00;
+    --warn-soft: #f6ecd2;
+    --mono-surface: #efe9dc;
+
+    --font-display: "Noto Serif TC", "Songti TC", serif;
+    --font-body: "Noto Sans TC", "PingFang TC", "Microsoft JhengHei", sans-serif;
+    --font-mono: "JetBrains Mono", "Cascadia Code", monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ink: #ece5d8;
+      --ink-soft: #b6ab98;
+      --paper: #1c1712;
+      --surface: #241e17;
+      --surface-sunken: #2c241b;
+      --border: #3c332654;
+      --border-strong: #4a3f2f;
+      --accent: #e08a3e;
+      --accent-soft: #3a2a17;
+      --accent-ink: #f0ac6e;
+      --good: #7fbd93;
+      --good-soft: #24352a;
+      --warn: #e0b854;
+      --warn-soft: #362c14;
+      --mono-surface: #2a2318;
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ink: #ece5d8;
+    --ink-soft: #b6ab98;
+    --paper: #1c1712;
+    --surface: #241e17;
+    --surface-sunken: #2c241b;
+    --border: #3c332654;
+    --border-strong: #4a3f2f;
+    --accent: #e08a3e;
+    --accent-soft: #3a2a17;
+    --accent-ink: #f0ac6e;
+    --good: #7fbd93;
+    --good-soft: #24352a;
+    --warn: #e0b854;
+    --warn-soft: #362c14;
+    --mono-surface: #2a2318;
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-body);
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .page {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 64px 28px 96px;
+  }
+
+  header.doc-head {
+    margin-bottom: 48px;
+  }
+
+  .eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.78rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent-ink);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-bottom: 14px;
+  }
+  .eyebrow::before {
+    content: "";
+    width: 22px;
+    height: 1px;
+    background: var(--accent);
+    display: inline-block;
+  }
+
+  h1 {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: clamp(1.9rem, 4vw, 2.5rem);
+    line-height: 1.25;
+    margin: 0 0 14px;
+    text-wrap: balance;
+    letter-spacing: 0.01em;
+  }
+
+  .doc-sub {
+    color: var(--ink-soft);
+    font-size: 1.02rem;
+    max-width: 62ch;
+    margin: 0;
+  }
+
+  .meta-strip {
+    margin-top: 28px;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .meta-cell {
+    background: var(--surface);
+    padding: 14px 16px;
+  }
+  .meta-cell .k {
+    font-size: 0.72rem;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+    margin-bottom: 4px;
+  }
+  .meta-cell .v {
+    font-family: var(--font-mono);
+    font-size: 0.92rem;
+    font-weight: 500;
+  }
+
+  section { margin-top: 56px; }
+
+  h2 {
+    font-family: var(--font-display);
+    font-weight: 600;
+    font-size: 1.4rem;
+    margin: 0 0 6px;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+  }
+  h2 .section-no {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    color: var(--accent-ink);
+    font-weight: 600;
+  }
+  .section-intro {
+    color: var(--ink-soft);
+    margin: 0 0 24px;
+    max-width: 64ch;
+    font-size: 0.97rem;
+  }
+
+  /* ---- Conclusion callout ---- */
+  .conclusion {
+    background: var(--good-soft);
+    border: 1px solid color-mix(in srgb, var(--good) 35%, var(--border));
+    border-radius: 12px;
+    padding: 22px 24px;
+    display: flex;
+    gap: 16px;
+    align-items: flex-start;
+  }
+  .conclusion .mark {
+    font-family: var(--font-display);
+    font-size: 1.6rem;
+    color: var(--good);
+    line-height: 1;
+    flex-shrink: 0;
+  }
+  .conclusion p { margin: 0; }
+  .conclusion strong { color: var(--good); }
+
+  /* ---- Steps ---- */
+  .steps {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+  .step {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    gap: 18px;
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 18px 20px;
+  }
+  .step-no {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--accent);
+    line-height: 1.4;
+  }
+  .step-title {
+    font-weight: 600;
+    margin: 0 0 6px;
+    font-size: 1rem;
+  }
+  .step-body { color: var(--ink-soft); font-size: 0.94rem; }
+  .step-body p { margin: 0 0 8px; }
+  .step-body p:last-child { margin-bottom: 0; }
+  .step code, .step-body code {
+    font-family: var(--font-mono);
+    background: var(--mono-surface);
+    padding: 2px 7px;
+    border-radius: 5px;
+    font-size: 0.88em;
+    color: var(--ink);
+    word-break: break-all;
+  }
+  .expect {
+    margin-top: 10px;
+    padding-top: 10px;
+    border-top: 1px dashed var(--border-strong);
+    font-size: 0.9rem;
+    display: flex;
+    gap: 8px;
+  }
+  .expect .tag {
+    flex-shrink: 0;
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--good);
+    background: var(--good-soft);
+    padding: 2px 8px;
+    border-radius: 100px;
+    height: fit-content;
+    white-space: nowrap;
+  }
+
+  .optional-tag {
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--warn);
+    background: var(--warn-soft);
+    padding: 2px 8px;
+    border-radius: 100px;
+    margin-left: 8px;
+  }
+
+  /* ---- Findings table ---- */
+  .findings {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+  }
+  .finding {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-left: 3px solid var(--accent);
+    border-radius: 8px;
+    padding: 16px 20px;
+  }
+  .finding-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    margin-bottom: 6px;
+  }
+  .finding-title { font-weight: 600; font-size: 0.96rem; }
+  .finding-status {
+    font-family: var(--font-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--good);
+    white-space: nowrap;
+  }
+  .finding p {
+    margin: 0;
+    color: var(--ink-soft);
+    font-size: 0.9rem;
+  }
+
+  /* ---- Footer ---- */
+  footer {
+    margin-top: 64px;
+    padding-top: 20px;
+    border-top: 1px solid var(--border);
+    color: var(--ink-soft);
+    font-size: 0.82rem;
+    display: flex;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  footer .f-mono { font-family: var(--font-mono); }
+
+  ::selection { background: var(--accent-soft); color: var(--accent-ink); }
+
+  @media (max-width: 520px) {
+    .page { padding: 40px 18px 72px; }
+    .step { grid-template-columns: 32px 1fr; padding: 16px; }
+  }
+</style>
+
+<div class="page">
+
+  <header class="doc-head">
+    <div class="eyebrow">測試流程文件 · 交付版</div>
+    <h1>三創智慧導購——優惠券發放與核銷測試流程</h1>
+    <p class="doc-sub">
+      涵蓋從聊天前台觸發發券、公開驗證頁查詢，到後台核銷、防重複核銷的完整流程，
+      以及本輪測試過程中發現並已修復的問題。
+    </p>
+    <div class="meta-strip">
+      <div class="meta-cell"><div class="k">測試對象</div><div class="v">三創智慧導購 (Syntrend Shopping)</div></div>
+      <div class="meta-cell"><div class="k">測試環境</div><div class="v">localhost:8234（本機 bench）</div></div>
+      <div class="meta-cell"><div class="k">測試帳號</div><div class="v">Administrator</div></div>
+      <div class="meta-cell"><div class="k">結論</div><div class="v" style="color:var(--good)">全部通過</div></div>
+    </div>
+  </header>
+
+  <section id="conclusion">
+    <h2><span class="section-no">Ⅰ</span>測試結論</h2>
+    <div class="conclusion">
+      <span class="mark">✓</span>
+      <p>
+        優惠券的<strong>發放、公開驗證、後台核銷、防重複核銷</strong>四個關鍵環節，
+        依下方步驟實測皆為正確結果。測試過程中另外發現 7 項體驗與邏輯問題，
+        已全數修復並重新驗證通過（詳見第三節）。
+      </p>
+    </div>
+  </section>
+
+  <section id="procedure">
+    <h2><span class="section-no">Ⅱ</span>測試步驟</h2>
+    <p class="section-intro">
+      以下步驟可在瀏覽器中重複執行；每一步都附上操作內容與預期結果，供覆測使用。
+    </p>
+
+    <div class="steps">
+
+      <div class="step">
+        <div class="step-no">01</div>
+        <div>
+          <p class="step-title">登入後台</p>
+          <div class="step-body">
+            <p>開啟 <code>http://localhost:8234/</code>，以 <code>Administrator</code> 帳號登入。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>成功進入 Desk 首頁，左側可見「三創智慧導購」選單。</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">02</div>
+        <div>
+          <p class="step-title">開啟聊天前台</p>
+          <div class="step-body">
+            <p>左側選單點「三創智慧導購」→ 點「💬 開啟三創智慧導購聊天前台」連結。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>開啟新分頁 <code>/chat</code>，顯示歡迎訊息。</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">03</div>
+        <div>
+          <p class="step-title">觸發商品推薦</p>
+          <div class="step-body">
+            <p>輸入框打字：<code>推薦充電器</code>，點「送出」。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>AI 追問接頭規格（例如「請問要搭配哪一種裝置或接頭規格？」）。</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">04</div>
+        <div>
+          <p class="step-title">回答規格，命中優惠活動</p>
+          <div class="step-body">
+            <p>輸入：<code>PD 快充</code>，點「送出」。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>出現商品卡 + 「快充商品限時 9 折」活動卡，文字提示可打「我要領優惠券」。</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">05</div>
+        <div>
+          <p class="step-title">領取優惠券</p>
+          <div class="step-body">
+            <p>輸入：<code>我要領優惠券</code>，點「送出」。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>產生真實優惠券卡片：QR code、券碼、「開啟核銷頁」連結。</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">06</div>
+        <div>
+          <p class="step-title">公開驗證</p>
+          <div class="step-body">
+            <p>點券卡片上的「開啟核銷頁」連結（不手動輸入網址）。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>新分頁顯示「優惠券狀態：可使用」，含活動、折扣、有效期限、適用門市。</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">07</div>
+        <div>
+          <p class="step-title">複製券碼</p>
+          <div class="step-body">
+            <p>回第 05 步券卡片，整段選取複製券碼文字。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>券碼已複製至剪貼簿，供下一步核銷使用。</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">08</div>
+        <div>
+          <p class="step-title">後台核銷</p>
+          <div class="step-body">
+            <p>切回 Desk → 「三創智慧導購」→「優惠券核銷」→ 貼上券碼 → 點「確認使用這張券」→ 確認視窗點「Yes」。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>顯示綠字「核銷完成。」</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">09</div>
+        <div>
+          <p class="step-title">確認狀態同步</p>
+          <div class="step-body">
+            <p>回第 06 步分頁，重新整理（F5）。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>狀態即時變更為「已核銷」。</span></div>
+        </div>
+      </div>
+
+      <div class="step">
+        <div class="step-no">10</div>
+        <div>
+          <p class="step-title">防重複核銷<span class="optional-tag">選測</span></p>
+          <div class="step-body">
+            <p>在第 08 步同頁，貼上同一組券碼再次核銷。</p>
+          </div>
+          <div class="expect"><span class="tag">預期</span><span>顯示具體原因「這張優惠券已經被使用過或已失效。」，且券無法二次核銷。</span></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="findings">
+    <h2><span class="section-no">Ⅲ</span>測試中發現並修復的問題</h2>
+    <p class="section-intro">
+      以下皆為本輪測試過程中實際重現、定位根因並修復的問題，修復後已逐項重新驗證通過。
+    </p>
+
+    <div class="findings">
+
+      <div class="finding">
+        <div class="finding-head">
+          <span class="finding-title">對話規格答錯一次，整段搜尋條件被清空</span>
+          <span class="finding-status">已修復</span>
+        </div>
+        <p>使用者答錯一次接頭規格（零筆商品）時，系統會把先前已確認的商品分類一併清空，導致後續怎麼回答都找不到商品。改為只保留已驗證有效的條件，不再整段清空。</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-head">
+          <span class="finding-title">商品「系列」欄位跨輪殘留，污染後續搜尋</span>
+          <span class="finding-status">已修復</span>
+        </div>
+        <p>AI 曾把商品型號誤判為「系列」欄位，且該欄位會一直沿用到後續完全無關的提問，導致新的搜尋也失敗。改為系列欄位不再跨輪繼承。</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-head">
+          <span class="finding-title">直接輸入完整商品名稱查無結果</span>
+          <span class="finding-status">已修復</span>
+        </div>
+        <p>使用者複製 AI 自己講出的商品全名詢問，因結構化欄位擷取誤判而查無此商品。加入商品名稱直接比對的備援機制。</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-head">
+          <span class="finding-title">詢問優惠活動被誤判為商品搜尋</span>
+          <span class="finding-status">已修復</span>
+        </div>
+        <p>提及「折」「優惠」等字詞的活動類問題，因擷取出無意義的分類詞而被導去搜商品，回覆答非所問。加入回退機制，改為直接列出進行中的優惠活動。</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-head">
+          <span class="finding-title">核銷失敗訊息未反映實際原因</span>
+          <span class="finding-status">已修復</span>
+        </div>
+        <p>無論是券已用過、已過期或查無此券，畫面一律顯示「請確認網路連線」的通用訊息，容易誤導成網路問題。改為依伺服器回傳的實際原因顯示對應文字。</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-head">
+          <span class="finding-title">部署環境存在兩份不同步的原始碼</span>
+          <span class="finding-status">已修復</span>
+        </div>
+        <p>Container 內存在建置時寫死的舊程式碼副本，與實際編輯路徑不同步，導致部分修改未生效。已完整同步並重啟服務。</p>
+      </div>
+
+      <div class="finding">
+        <div class="finding-head">
+          <span class="finding-title">無前置條件領券時缺乏引導</span>
+          <span class="finding-status">已修復</span>
+        </div>
+        <p>使用者直接說「我想領優惠券」卻尚未確認商品時，原本只回覆制式提示，未告知目前有哪些商品/活動可選。改為主動列出可湊優惠的商品與類別，引導使用者接續操作。</p>
+      </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <span>三創智慧導購 · 優惠券模組測試紀錄</span>
+    <span class="f-mono">syntrend-ai-shopping-guide</span>
+  </footer>
+
+</div>
